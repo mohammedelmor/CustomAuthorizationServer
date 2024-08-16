@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: AuthorizationServer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_server
+    username: admin
+    password: secret
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/auth_server
+    user: admin
+    password: secret
