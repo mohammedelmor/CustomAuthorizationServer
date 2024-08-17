@@ -34,12 +34,15 @@ public class User {
     )
     private Set<UserPermission> userPermissions = new HashSet<>();
 
-
     public void addUserPermission(Permission permission, Group group) {
         UserPermission userPermission = new UserPermission();
         userPermission.setUser(this);
         userPermission.setPermission(permission);
         userPermission.setGroup(group);
         userPermissions.add(userPermission);
+    }
+
+    public void removeUserPermission(Long userPermissionId) {
+        userPermissions.removeIf(userPermission -> userPermission.getId().equals(userPermissionId));
     }
 }

@@ -17,11 +17,9 @@ public class UserPermission {
     @SequenceGenerator(name = "user_permission_id_seq", sequenceName = "user_permission_id_seq")
     private Long id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "permission_id")
