@@ -10,3 +10,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/auth_server
     user: admin
     password: secret
+    default-schema: auth_server
+  jpa:
+    properties:
+      hibernate:
+        default_schema: auth_server
+        format_sql: true
+    show-sql: true
