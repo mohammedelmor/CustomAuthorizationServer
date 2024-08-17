@@ -27,8 +27,7 @@ public class Group {
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "group",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+            mappedBy = "group"
     )
     private Set<UserPermission> userPermissions = new HashSet<>();
 }

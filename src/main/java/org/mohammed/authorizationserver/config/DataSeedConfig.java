@@ -55,13 +55,13 @@ public class DataSeedConfig {
 
     public void seedGroups() {
         Group group1 = new Group();
-        group1.setName("Group #1");
+        group1.setName("HR");
 
         Group group2 = new Group();
-        group2.setName("Group #2");
+        group2.setName("Finance");
 
         Group group3 = new Group();
-        group3.setName("Group #3");
+        group3.setName("Admin");
 
         List<Group> groups = List.of(group1, group2, group3);
         groupRepository.saveAll(groups);
@@ -70,13 +70,13 @@ public class DataSeedConfig {
 
     public void seedPermissions() {
         Permission permission1 = new Permission();
-        permission1.setName("Permission #1");
+        permission1.setName("READ");
 
         Permission permission2 = new Permission();
-        permission2.setName("Permission #2");
+        permission2.setName("WRITE");
 
         Permission permission3 = new Permission();
-        permission3.setName("Permission #3");
+        permission3.setName("DELETE");
 
         List<Permission> permissions = List.of(permission1, permission2, permission3);
         permissionRepository.saveAll(permissions);

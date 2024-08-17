@@ -24,8 +24,7 @@ public class Permission {
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "permission",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+            mappedBy = "permission"
     )
     private Set<UserPermission> userPermissions = new HashSet<>();
 

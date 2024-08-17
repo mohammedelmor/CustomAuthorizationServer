@@ -7,6 +7,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"user_id", "permission_id", "group_id"})
+})
 public class UserPermission {
 
     @Id
@@ -20,11 +23,11 @@ public class UserPermission {
     private User user;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "permission_id")
     private Permission permission;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "group_id")
     private Group group;
 

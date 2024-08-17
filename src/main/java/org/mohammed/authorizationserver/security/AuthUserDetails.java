@@ -20,7 +20,7 @@ public class AuthUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getUserPermissions().stream()
-                .map(userPermission -> String.format("%s_%s",userPermission.getPermission().getName(), userPermission.getGroup().getName()))
+                .map(userPermission -> String.format("%s#%s",userPermission.getGroup().getName(), userPermission.getPermission().getName()))
                 .map(SimpleGrantedAuthority::new).toList();
     }
 

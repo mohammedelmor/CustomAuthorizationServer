@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,7 +41,5 @@ public class User {
         userPermission.setPermission(permission);
         userPermission.setGroup(group);
         userPermissions.add(userPermission);
-        permission.getUserPermissions().add(userPermission);
-        group.getUserPermissions().add(userPermission);
     }
 }
