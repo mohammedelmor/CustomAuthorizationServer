@@ -1,5 +1,7 @@
 package org.mohammed.authorizationserver.service;
 
+import jakarta.transaction.Transactional;
+import org.mapstruct.Named;
 import org.mohammed.authorizationserver.dto.GroupPostDto;
 import org.mohammed.authorizationserver.exception.GroupAlreadyExistsException;
 import org.mohammed.authorizationserver.exception.GroupNotFoundException;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class GroupService {
 
     private final GroupRepository groupRepository;
@@ -21,6 +24,7 @@ public class GroupService {
         this.groupMapper = groupMapper;
     }
 
+    @Named("findById")
     public Group findById(Long id) {
         var group = groupRepository.findById(id);
         if (group.isEmpty()) {

@@ -1,6 +1,7 @@
 package org.mohammed.authorizationserver.service;
 
 import jakarta.transaction.Transactional;
+import org.mapstruct.Named;
 import org.mohammed.authorizationserver.dto.PermissionPostDto;
 import org.mohammed.authorizationserver.exception.PermissionAlreadyExistsException;
 import org.mohammed.authorizationserver.exception.PermissionNotFoundException;
@@ -25,6 +26,7 @@ public class PermissionService {
         this.permissionMapper = permissionMapper;
     }
 
+    @Named("findById")
     public Permission findById(Long id) {
         var permission = permissionRepository.findById(id);
         if (permission.isEmpty()) {
@@ -64,7 +66,7 @@ public class PermissionService {
         return permissionRepository.save(updatedEntity);
     }
 
-    public void deletePermission(Long id) {
+    public void delete(Long id) {
         if (permissionRepository.findById(id).isEmpty()) {
             throw new PermissionNotFoundException("Permission with id: " + id + " does not exist");
         }

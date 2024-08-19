@@ -69,8 +69,9 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
             throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults());
 

@@ -1,13 +1,23 @@
 package org.mohammed.authorizationserver.mapper;
 
 import org.mapstruct.*;
+import org.mohammed.authorizationserver.dto.UserGetDto;
 import org.mohammed.authorizationserver.dto.UserMinimalGetDto;
+import org.mohammed.authorizationserver.dto.UserPostDto;
 import org.mohammed.authorizationserver.model.User;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+import java.util.List;
+
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        uses = {UserPermissionMapper.class, GroupMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
-    User toEntity(UserMinimalGetDto userMinimalGetDto);
+    User toEntity(UserPostDto dto);
 
-    UserMinimalGetDto toDto(User user);
+    UserGetDto toDto(User user);
 
+    UserMinimalGetDto toMinimalDto(User user);
+
+    List<UserGetDto> toDto(List<User> users);
+
+    List<UserMinimalGetDto> toMinimalDto(List<User> users);
 }
