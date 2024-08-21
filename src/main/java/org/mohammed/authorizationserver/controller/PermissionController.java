@@ -5,6 +5,7 @@ import org.mohammed.authorizationserver.dto.PermissionPostDto;
 import org.mohammed.authorizationserver.mapper.PermissionMapper;
 import org.mohammed.authorizationserver.service.PermissionService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,28 +21,29 @@ public class PermissionController {
     }
 
     @GetMapping
-    public Page<PermissionGetDto> findAll(int page, int size) {
-        return permissionService.findAll(page, size).map(permissionMapper::toDto);
+    public ResponseEntity<Page<PermissionGetDto>> findAll(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(permissionService.findAll(page, size).map(permissionMapper::toDto));
     }
 
     @GetMapping("/{id}")
-    public PermissionGetDto findById(@PathVariable Long id) {
-        return permissionMapper.toDto(permissionService.findById(id));
+    public ResponseEntity<PermissionGetDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(permissionMapper.toDto(permissionService.findById(id)));
     }
 
     @PostMapping
-    public PermissionGetDto create(PermissionPostDto dto) {
-        return permissionMapper.toDto(permissionService.create(dto));
+    public ResponseEntity<PermissionGetDto> create(@RequestBody PermissionPostDto dto) {
+        return ResponseEntity.ok(permissionMapper.toDto(permissionService.create(dto)));
     }
 
     @PutMapping("/{id}")
-    public PermissionGetDto update(PermissionPostDto dto, @PathVariable Long id) {
-        return permissionMapper.toDto(permissionService.update(dto, id));
+    public ResponseEntity<PermissionGetDto> update(@RequestBody PermissionPostDto dto, @PathVariable Long id) {
+        return ResponseEntity.ok(permissionMapper.toDto(permissionService.update(dto, id)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         permissionService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

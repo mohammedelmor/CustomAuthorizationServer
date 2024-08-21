@@ -1,15 +1,16 @@
 package org.mohammed.authorizationserver.controller;
 
-import org.mohammed.authorizationserver.dto.UserGetDto;
-import org.mohammed.authorizationserver.dto.UserPostDto;
-import org.mohammed.authorizationserver.dto.UserPutDto;
+import lombok.extern.slf4j.Slf4j;
+import org.mohammed.authorizationserver.dto.*;
 import org.mohammed.authorizationserver.mapper.UserMapper;
 import org.mohammed.authorizationserver.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -21,28 +22,31 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<UserGetDto> findAll(int page, int size) {
-        return userService.findAll(page, size).map(userMapper::toDto);
+    public ResponseEntity<Page<UserGetDto>> findAll(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(userService.findAll(page, size).map(userMapper::toDto));
     }
 
     @GetMapping("/{id}")
-    public UserGetDto findById(@PathVariable Long id) {
-        return userMapper.toDto(userService.findById(id));
+    public ResponseEntity<UserGetDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(userMapper.toDto(userService.findById(id)));
     }
 
     @PostMapping
-    public UserGetDto create(UserPostDto dto) {
-        return userMapper.toDto(userService.create(dto));
+    public ResponseEntity<UserGetDto> create(@RequestBody UserPostDto dto) {
+        log.info("Creating user: {}", dto);
+        return ResponseEntity.ok(userMapper.toDto(userService.create(dto)));
     }
 
+
     @PutMapping("/{id}")
-    public UserGetDto update(UserPutDto dto, @PathVariable Long id) {
-        return userMapper.toDto(userService.update(dto, id));
+    public ResponseEntity<UserGetDto> update(@RequestBody UserPutDto dto, @PathVariable Long id) {
+        return ResponseEntity.ok(userMapper.toDto(userService.update(dto, id)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

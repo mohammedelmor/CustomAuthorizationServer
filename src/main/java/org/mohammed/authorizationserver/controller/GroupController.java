@@ -5,6 +5,7 @@ import org.mohammed.authorizationserver.dto.GroupPostDto;
 import org.mohammed.authorizationserver.mapper.GroupMapper;
 import org.mohammed.authorizationserver.service.GroupService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,28 +21,29 @@ public class GroupController {
     }
 
     @GetMapping
-    public Page<GroupGetDto> findAll(int page, int size) {
-        return groupService.findAll(page, size).map(groupMapper::toDto);
+    public ResponseEntity<Page<GroupGetDto>> findAll(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(groupService.findAll(page, size).map(groupMapper::toDto));
     }
 
     @GetMapping("/{id}")
-    public GroupGetDto findById(@PathVariable Long id) {
-        return groupMapper.toDto(groupService.findById(id));
+    public ResponseEntity<GroupGetDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(groupMapper.toDto(groupService.findById(id)));
     }
 
     @PostMapping
-    public GroupGetDto create(GroupPostDto dto) {
-        return groupMapper.toDto(groupService.create(dto));
+    public ResponseEntity<GroupGetDto> create(@RequestBody GroupPostDto dto) {
+        return ResponseEntity.ok(groupMapper.toDto(groupService.create(dto)));
     }
 
     @PutMapping("/{id}")
-    public GroupGetDto update(GroupPostDto dto, @PathVariable Long id) {
-        return groupMapper.toDto(groupService.update(dto, id));
+    public ResponseEntity<GroupGetDto> update(@RequestBody GroupPostDto dto, @PathVariable Long id) {
+        return ResponseEntity.ok(groupMapper.toDto(groupService.update(dto, id)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         groupService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 

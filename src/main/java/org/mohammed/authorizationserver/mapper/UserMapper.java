@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
         uses = {UserPermissionMapper.class, GroupMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
+    @Mapping(target = "username", source = "user")
+    @Mapping(target = "password", source = "credentials")
     User toEntity(UserPostDto dto);
 
     UserGetDto toDto(User user);

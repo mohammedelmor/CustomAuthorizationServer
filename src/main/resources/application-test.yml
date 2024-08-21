@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: AuthorizationServer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_server
+    username: admin
+    password: secret
+  jpa:
+    properties:
+      hibernate:
+        default_schema: auth_server
+        format_sql: true
+        hbm2ddl:
+          auto: create-drop
+    show-sql: true

@@ -8,5 +8,5 @@ import java.io.Serializable;
 /**
  * DTO for {@link org.mohammed.authorizationserver.model.User}
  */
-public record UserPutDto(@NotNull(message = "password required") String password) implements Serializable {
+public record UserPutDto(@NotNull(message = "password required") String credentials) implements Serializable {
 }

@@ -11,6 +11,7 @@ import org.mohammed.authorizationserver.model.User;
 import org.mohammed.authorizationserver.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,10 +20,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Named("findById")
@@ -47,10 +50,12 @@ public class UserService {
     }
 
     public User create(UserPostDto dto) {
-        if (userRepository.findByUsername(dto.username()).isPresent()) {
-            throw new UserAlreadyExistsException("User " + dto.username() + " already exists");
+        if (userRepository.findByUsername(dto.user()).isPresent()) {
+            throw new UserAlreadyExistsException("User " + dto.user() + " already exists");
         }
-        return userRepository.save(userMapper.toEntity(dto));
+        var user = userMapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.credentials()));
+        return userRepository.save(user);
     }
 
     public User update(UserPutDto dto, Long id) {
@@ -59,7 +64,7 @@ public class UserService {
             throw new UserNotFoundException("User with id: " + id + " does not exist");
         }
         var updatedEntity = user.map(u -> {
-            u.setPassword(dto.password());
+            u.setPassword(passwordEncoder.encode(dto.credentials()));
             return userRepository.save(u);
         });
         return updatedEntity.get();
