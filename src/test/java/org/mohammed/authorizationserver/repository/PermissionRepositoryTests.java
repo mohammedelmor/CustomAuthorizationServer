@@ -60,6 +60,60 @@ public class PermissionRepositoryTests {
         Assertions.assertThat(savedPermission.getName()).isEqualTo("TEST1");
     }
 
+    @Test
+    public void PermissionRepository_FindByName_ReturnsPermission() {
+        // Arrange
+        var permission = new Permission();
+        permission.setName("TEST1");
+        permissionRepository.save(permission);
+        // Act
+        var savedPermission = permissionRepository.findByName("TEST1");
+        // Assert
+        Assertions.assertThat(savedPermission).isNotNull();
+        Assertions.assertThat(savedPermission.get().getName()).isEqualTo("TEST1");
+    }
+
+    @Test
+    public void PermissionRepository_DeletePermission_ReturnsNoPermission() {
+        // Arrange
+        var permission = new Permission();
+        permission.setName("TEST1");
+        permissionRepository.save(permission);
+        // Act
+        permissionRepository.delete(permission);
+        var savedPermission = permissionRepository.findById(permission.getId());
+        // Assert
+        Assertions.assertThat(savedPermission).isEmpty();
+    }
+
+    @Test
+    public void PermissionRepository_DeleteAll_ReturnsNoPermission() {
+        // Arrange
+        var permission1 = new Permission();
+        permission1.setName("TEST1");
+        var permission2 = new Permission();
+        permission2.setName("TEST2");
+        permissionRepository.saveAll(List.of(permission1, permission2));
+        // Act
+        permissionRepository.deleteAll();
+        var savedPermissions = permissionRepository.findAll();
+        // Assert
+        Assertions.assertThat(savedPermissions).isEmpty();
+    }
+
+    @Test
+    public void PermissionRepository_Update_ReturnsUpdatedPermission() {
+        // Arrange
+        var permission = new Permission();
+        permission.setName("TEST1");
+        var savedPermission = permissionRepository.save(permission);
+        // Act
+        savedPermission.setName("TEST1_UPDATED");
+        permissionRepository.save(savedPermission);
+        var updatedPermission = permissionRepository.findById(savedPermission.getId()).get();
+        // Assert
+        Assertions.assertThat(updatedPermission.getName()).isEqualTo("TEST1_UPDATED");
+    }
 
 
 

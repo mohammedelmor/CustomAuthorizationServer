@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.mohammed.authorizationserver.model.Group;
 import org.mohammed.authorizationserver.model.Permission;
 import org.mohammed.authorizationserver.model.User;
-import org.mohammed.authorizationserver.model.UserPermission;
 import org.mohammed.authorizationserver.repository.GroupRepository;
 import org.mohammed.authorizationserver.repository.PermissionRepository;
 import org.mohammed.authorizationserver.repository.UserPermissionRepository;

@@ -10,6 +10,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/auth_server
     user: admin
     password: secret
+    baseline-on-migrate: true
     default-schema: auth_server
   jpa:
     properties:
